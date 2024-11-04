@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",                        // Enable latest ECMAScript features
+    "module": "commonjs",                      // Use CommonJS for Node.js compatibility
+    "esModuleInterop": true,                   // Enable interoperability for default imports
+    "allowSyntheticDefaultImports": true,      // Allow default imports from modules with no default export
+    "skipLibCheck": true,                      // Skip type-checking of declaration files for faster builds
+    "strict": true,                            // Enable all strict type-checking options
+    "outDir": "./dist",                        // Output directory for compiled files
+    "rootDir": "./src",                        // Specify root directory of the project
+    "moduleResolution": "node",                // Resolve modules like Node.js
+    "forceConsistentCasingInFileNames": true,  // Enforce consistent casing in imports
+    "resolveJsonModule": true,                 // Allow importing .json files
+    "noImplicitAny": true,                     // Disallow variables with implicit "any" types
+    "noEmitOnError": true                      // Prevent emitting files if there are errors
+  },
+  "include": ["src/**/*.ts"],                  // Include all TypeScript files in the src directory
+  "exclude": ["node_modules", "dist"]          // Exclude node_modules and dist from compilation
+}

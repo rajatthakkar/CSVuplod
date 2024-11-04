@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSV Data Viewer</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      display: flex;
+      justify-content: center; /* Center contents */
+      align-items: center;
+      position: relative;
+    }
+
+    .navbar .back-btn {
+      font-size: 18px;
+      color: white;
+      background-color: #007bff;
+      padding: 10px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      position: absolute;
+      left: 10px; /* Place back button on the left */
+    }
+
+    .navbar h1 {
+      font-size: 20px;
+      text-align: left;
+      margin-right: auto; /* Align title to the left with back button */
+      margin-left: 50px; /* Add some space from the back button */
+    }
+
+    .navbar .file-name {
+      font-size: 16px;
+      background-color: #555;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: white;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* Search Section */
+    .search-section {
+      margin-top: 30px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-section input[type="text"] {
+      width: 80%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .search-section button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    .search-section p {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    /* Table */
+    .table-container {
+      margin-top: 20px;
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background-color: white;
+    }
+
+    table th, table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    table th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    table td {
+      font-size: 14px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      .navbar h1 {
+        font-size: 16px;
+      }
+
+      .search-section input[type="text"] {
+        width: 70%;
+        font-size: 12px;
+      }
+
+      table th, table td {
+        font-size: 12px;
+        padding: 10px;
+      }
+
+      .navbar .file-name {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <button class="back-btn" onclick="history.back()">←</button>
+    <h1>CSV Data Viewer</h1> <!-- Left aligned title with back button -->
+    <span class="file-name">File: Students List</span> <!-- Centered file name -->
+  </div>
+
+  <!-- Search Section -->
+  <div class="search-section">
+    <input type="text" placeholder="Search data..." id="searchInput">
+    <button type="button">GO</button>
+    <p>Document has <strong>50 rows</strong></p> <!-- Dynamic row count -->
+  </div>
+
+  <!-- Table Section -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>State</th>
+          <th>Build Year</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody id="tableContent">
+        <tr>
+          <td>John Doe</td>
+          <td>California</td>
+          <td>2020</td>
+          <td>Beautiful modern house.</td>
+        </tr>
+        <tr>
+          <td>Jane Smith</td>
+          <td>Texas</td>
+          <td>2018</td>
+          <td>Spacious villa with a large garden.</td>
+        </tr>
+        <!-- More rows can be dynamically inserted -->
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>

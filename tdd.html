@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>String Calculator</h1>
+        <input type="text" id="inputString" placeholder="Enter numbers separated by commas or newlines" />
+        <br/>
+        <button onclick="calculate()">Calculate</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculate() {
+            const input = document.getElementById('inputString').value;
+            const resultElement = document.getElementById('result');
+
+            try {
+                const result = add(input);
+                resultElement.innerHTML = `Result: ${result}`;
+            } catch (error) {
+                resultElement.innerHTML = `Error: ${error.message}`;
+            }
+        }
+
+        function add(numbers) {
+            if (numbers === "") return 0;
+
+            const numArray = numbers.split(/,|\n/);
+            let negatives = [];
+            let sum = 0;
+
+            numArray.forEach(token => {
+                const num = parseInt(token, 10);
+                if (num < 0) negatives.push(num);
+                else if (num <= 1000) sum += num;
+            });
+
+            if (negatives.length > 0) {
+                throw new Error('Negatives not allowed: ' + negatives.join(', '));
+            }
+
+            return sum;
+        }
+    </script>
+</body>
+</html>

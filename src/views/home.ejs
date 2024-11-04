@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSV Upload and Display</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .navbar .icon {
+      font-size: 20px;
+      margin-right: 15px;
+    }
+
+    .navbar h1 {
+      font-size: 18px;
+    }
+
+    /* Upload Section */
+    .upload-section {
+      margin-top: 20px;
+      padding: 20px;
+      border: 2px dashed #333;
+      background-color: #fff;
+      text-align: center;
+    }
+
+    .upload-section h2 {
+      margin-bottom: 10px;
+      font-size: 22px;
+    }
+
+    .upload-section p {
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .upload-section input[type="file"] {
+      display: none;
+    }
+
+    .upload-section label {
+      display: inline-block;
+      background-color: #28a745;
+      color: white;
+      padding: 10px 20px;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .upload-section button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Full-width progress bar */
+    .upload-bar {
+      width: 100%;
+      height: 5px;
+      background-color: #e0e0e0;
+      margin: 20px 0;
+      position: relative;
+    }
+
+    .upload-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 5px;
+      width: 70%; /* Change this width dynamically when uploading */
+      background-color: #28a745;
+    }
+
+    /* Table */
+    .table-container {
+      width: 100%;
+      margin-top: 20px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    table th, table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    table th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    table td button {
+      padding: 5px 10px;
+      border: none;
+      background-color: #28a745;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      .navbar h1 {
+        font-size: 16px;
+      }
+
+      .upload-section h2 {
+        font-size: 18px;
+      }
+
+      table th, table td {
+        font-size: 12px;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <span class="icon">📂</span>
+    <h1>Upload CSV</h1>
+  </div>
+
+  <!-- Upload Section -->
+  <!-- Upload Section -->
+<div class="upload-section">
+  <h2>Upload CSV File</h2>
+  <p>Read the CSV file and display its content in a tabular format below.</p>
+  <form id="uploadForm" method="post" action="/api/upload" enctype="multipart/form-data">
+    <label for="fileInput">Choose File</label>
+    <input type="file" name="filefield" id="fileInput" accept=".csv">
+    <button type="submit">Upload File</button>
+  </form>
+
+  <!-- Upload progress bar -->
+  <div class="upload-bar"></div>
+</div>
+
+
+  <!-- Table Section -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>View</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody id="tableContent">
+        <tr>
+          <td>John Doe</td>
+          <td>2024-10-23</td>
+          <td>10:00 AM</td>
+          <td><button>View</button></td>
+          <td><button>Details</button></td>
+        </tr>
+        <!-- More rows will be dynamically inserted here -->
+      </tbody>
+    </table>
+  </div>
+
+</body>
+<script>
+  document.getElementById("uploadForm").onsubmit = function (event) {
+      event.preventDefault(); // Prevent form submission to handle it manually
+
+      const form = event.target;
+      const formData = new FormData(form);
+      const xhr = new XMLHttpRequest();
+
+      xhr.open("POST", form.action, true);
+      xhr.upload.onprogress = function (e) {
+          if (e.lengthComputable) {
+              const progress = (e.loaded / e.total) * 100;
+              document.querySelector(".upload-bar::after").style.width = progress + "%";
+          }
+      };
+
+      xhr.onload = function () {
+          if (xhr.status === 200) {
+              console.log("File uploaded successfully.");
+              // Optionally reload or update the table with new data
+          } else {
+              console.error("Upload failed.");
+          }
+      };
+
+      xhr.send(formData);
+  };
+</script>
+
+</html>
