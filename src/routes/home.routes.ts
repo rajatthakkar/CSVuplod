@@ -10,10 +10,15 @@ routerHome.get('/', (req:Request,res:Response)=>{
     console.log("inside route function")
     homeController.renderHomePage(req,res)
 })
-console.log("outside route")
+
 routerHome.post('/upload',upload.single('filefield'),(req:Request,res:Response)=>{
     console.log("inside file Route")
-    homeController.validatedFile(req,res)})
+    homeController.validatedFile(req,res)
+})
+routerHome.get('/show/:id',(req:Request,res:Response)=>{
+    console.log("inside file Route")
+    homeController.showFileData(req,res)
+})
 
 
 export {routerHome}

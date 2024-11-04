@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSV Data</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    
+    h1 {
+      color: #333;
+    }
+    
+    .search-bar {
+      margin-bottom: 20px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 8px;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .highlight {
+      background-color: #ffffcc; /* Highlight color for matching cells */
+    }
+  </style>
+</head>
+<body>
+  <h1>CSV File Data</h1>
+
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <label for="searchInput">Search: </label>
+    <input type="text" id="searchInput" placeholder="Type to search...">
+  </div>
+
+  <!-- Table Displaying CSV Data -->
+  <table>
+    <thead>
+      <tr>
+        <% if (csvData.length > 0) { %>
+          <% Object.keys(csvData[0]).forEach(key => { %>
+            <th><%= key %></th>
+          <% }) %>
+        <% } %>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      <% csvData.forEach(row => { %>
+        <tr>
+          <% Object.values(row).forEach(value => { %>
+            <td><%= value %></td>
+          <% }) %>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <script>
+    document.getElementById("searchInput").addEventListener("input", function() {
+      const query = this.value.toLowerCase();
+      const rows = document.querySelectorAll("#tableBody tr");
+
+      rows.forEach(row => {
+        let rowContainsQuery = false;
+        
+        row.querySelectorAll("td").forEach(cell => {
+          if (cell.textContent.toLowerCase().includes(query)) {
+            cell.classList.add("highlight");
+            rowContainsQuery = true;
+          } else {
+            cell.classList.remove("highlight");
+          }
+        });
+
+        // Show row if any cell matches, otherwise hide
+        row.style.display = rowContainsQuery ? "" : "none";
+      });
+    });
+  </script>
+</body>
+</html>
